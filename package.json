@@ -1,0 +1,11 @@
+{
+  "name": "tomtom-recruitment-task",
+  "version": "1.0.0",
+  "description": "Recruitment task for TomTom",
+  "main": "dist/app.js",
+  "scripts": {
+    "compile": "tsc --watch"
+  },
+  "author": "Kamil Petryniak",
+  "license": "ISC"
+}
