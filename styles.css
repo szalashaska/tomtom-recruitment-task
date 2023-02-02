@@ -113,14 +113,20 @@ button[type="submit"]:focus {
 }
 
 .toast {
+  opacity: 1;
   font-size: 0.9rem;
   margin-bottom: 1rem;
   background: lightgreen;
   padding: 0.4rem 0.5rem;
+  transition: all 0.5s ease;
 }
 
 .toast p {
   margin-right: 1.5rem;
+}
+
+.toast.transparent {
+  opacity: 0;
 }
 
 #toast-container {

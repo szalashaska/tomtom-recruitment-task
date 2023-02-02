@@ -47,9 +47,15 @@ const deleteToast = (element) => {
     if (appState.timeoutId)
         clearTimeout(appState.timeoutId);
 };
+const handleDeleteToast = (element) => {
+    element.addEventListener("transitionend", () => {
+        deleteToast(element);
+    });
+    element.classList.add("transparent");
+};
 const assignTimeout = (element) => {
     appState.timeoutId = setTimeout(() => {
-        deleteToast(element);
+        handleDeleteToast(element);
     }, TOAST_TIMEOUT);
 };
 const renderToastComponent = () => {
@@ -93,7 +99,7 @@ const handleClickOnMessage = (e) => {
 };
 const handleClickOnToast = (e) => {
     if (e.target.tagName === "BUTTON")
-        deleteToast(e.target.parentElement);
+        handleDeleteToast(e.target.parentElement);
 };
 const init = () => {
     renderMessages();

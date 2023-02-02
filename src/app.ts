@@ -71,9 +71,16 @@ const deleteToast: (element: HTMLDivElement) => void = (element) => {
   if (appState.timeoutId) clearTimeout(appState.timeoutId);
 };
 
+const handleDeleteToast: (element: HTMLDivElement) => void = (element) => {
+  element.addEventListener("transitionend", () => {
+    deleteToast(element);
+  });
+  element.classList.add("transparent");
+};
+
 const assignTimeout: (element: HTMLDivElement) => void = (element) => {
   appState.timeoutId = setTimeout(() => {
-    deleteToast(element);
+    handleDeleteToast(element);
   }, TOAST_TIMEOUT);
 };
 
@@ -131,7 +138,7 @@ const handleClickOnToast: (
   }
 ) => void = (e) => {
   if (e.target.tagName === "BUTTON")
-    deleteToast(e.target.parentElement as HTMLDivElement);
+    handleDeleteToast(e.target.parentElement as HTMLDivElement);
 };
 
 const init: () => void = () => {
