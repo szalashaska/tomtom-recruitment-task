@@ -6,8 +6,9 @@ export const createMessageElement = (id, message) => {
     deleteButton.innerText = "x";
     deleteButton.type = "button";
     listElement.dataset.id = id.toString();
-    listElement.appendChild(deleteButton);
+    listElement.classList.add("message");
     listElement.appendChild(messageText);
+    listElement.appendChild(deleteButton);
     return listElement;
 };
 export const createToastElement = (message) => {
@@ -17,7 +18,8 @@ export const createToastElement = (message) => {
     messageText.innerText = message;
     deleteButton.innerText = "x";
     deleteButton.type = "button";
-    divElement.appendChild(deleteButton);
+    divElement.classList.add("toast");
     divElement.appendChild(messageText);
+    divElement.appendChild(deleteButton);
     return divElement;
 };

@@ -6,21 +6,129 @@
   padding: 0;
 }
 body {
-  background: lightblue;
+  background: linear-gradient(45deg, lightblue, yellow, lightcoral, red);
   font-family: "Barlow Semi Condensed", sans-serif;
 }
 
 main {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+button {
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem;
+  font-family: inherit;
+  border-radius: 12px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#message-form {
+  padding-top: 1rem;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 0.7rem;
+  display: block;
+  text-align: center;
+  text-shadow: 0 0 3px rgba(200, 220, 220, 0.5);
+}
+
+#user-input {
+  min-width: 35ch;
+  padding: 0.5rem 1rem;
+  margin-block: 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(66, 68, 90, 0.75);
+}
+
+#user-input:hover {
+  box-shadow: 0 0 25px rgba(66, 68, 90, 0.9);
+}
+
+button[type="submit"] {
+  background: lightgreen;
+  border: 2px solid green;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+  background: greenyellow;
+}
+
+#random-button {
+  display: block;
+  background-color: antiquewhite;
+  border: 2px solid lightskyblue;
+}
+
+#random-button:hover,
+#random-button:focus {
+  background-color: whitesmoke;
+}
+
+#message-list {
+  list-style: none;
+}
+
+.message,
+.toast {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(66, 68, 90, 0.75);
+}
+
+.message {
+  padding: 0.5rem 1rem;
+  min-width: 35ch;
+  background-color: aliceblue;
+}
+
+.message button,
+.toast button {
+  background: lightcoral;
+  border: 2px solid red;
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+}
+
+.message button:hover,
+.message button:focus,
+.toast button:hover,
+.toast button:focus {
+  background: crimson;
+}
+
+.toast {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  background: lightgreen;
+  padding: 0.4rem 0.5rem;
+}
+
+.toast p {
+  margin-right: 1.5rem;
+}
+
 #toast-container {
-  background-color: azure;
+  background-color: transparent;
   width: 100%;
   position: fixed;
   bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -18,25 +18,19 @@
   <body>
     <main>
       <form id="message-form">
-        <label for="user-input"
-          >Enter your message:
-          <input
-            id="user-input"
-            type="text"
-            placeholder="Your message..."
-            required
-          />
-        </label>
+        <label for="user-input">Enter your message: </label>
+        <input
+          id="user-input"
+          type="text"
+          placeholder="Your message..."
+          maxlength="32"
+          required
+        />
         <button type="submit">+</button>
         <button type="button" id="random-button">Generete message</button>
       </form>
       <ul id="message-list"></ul>
-      <div id="toast-container">
-        <div>
-          <p>test text</p>
-          <button>elo</button>
-        </div>
-      </div>
+      <div id="toast-container"></div>
     </main>
   </body>
 </html>
