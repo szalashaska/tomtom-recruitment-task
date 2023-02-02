@@ -4,6 +4,10 @@ import {
   createToastElement,
 } from "./utils/dom-elements.js";
 import randomMessages from "./helpers/randomMessages.js";
+import {
+  saveToLocalStorage,
+  readFromLocalStorage,
+} from "./utils/local-storage-handlers.js";
 
 const formlElement: HTMLElement = document.getElementById(
   "message-form"
@@ -19,8 +23,11 @@ const toastContainerElement = document.getElementById(
   "toast-container"
 ) as HTMLDivElement;
 
+const TOAST_TIMEOUT: number = 5000;
+const USE_LOCAL_STORAGE: boolean = true;
+
 const appState: AppStateType = {
-  messagesList: [],
+  messagesList: readFromLocalStorage(),
   currentToastId: null,
   timeoutId: null,
 };
@@ -31,16 +38,13 @@ const generateRandomInput: () => string = () => {
   return randomMessages[index];
 };
 
-const handleRandomButtonClick: () => void = () => {
-  inputElement.value = generateRandomInput();
-};
-
 const appendMessageToList: (message: string) => void = (message) => {
   const newMessage: MessageType = {
     id: Date.now(),
     message,
   };
   appState.messagesList.unshift(newMessage);
+  if (USE_LOCAL_STORAGE) saveToLocalStorage(appState.messagesList);
 };
 
 const clearFormInput: () => void = () => {
@@ -59,6 +63,7 @@ const removeMessageFromList: (id: string) => void = (id) => {
   appState.messagesList = appState.messagesList.filter(
     (item) => item.id !== Number(id)
   );
+  if (USE_LOCAL_STORAGE) saveToLocalStorage(appState.messagesList);
 };
 
 const deleteToast: (element: HTMLDivElement) => void = (element) => {
@@ -69,7 +74,7 @@ const deleteToast: (element: HTMLDivElement) => void = (element) => {
 const assignTimeout: (element: HTMLDivElement) => void = (element) => {
   appState.timeoutId = setTimeout(() => {
     deleteToast(element);
-  }, 2000);
+  }, TOAST_TIMEOUT);
 };
 
 const renderToastComponent: () => void = () => {
@@ -88,6 +93,10 @@ const renderToastComponent: () => void = () => {
   const newToast = createToastElement(message);
   assignTimeout(newToast);
   toastContainerElement.appendChild(newToast);
+};
+
+const handleRandomButtonClick: () => void = () => {
+  inputElement.value = generateRandomInput();
 };
 
 const handleRemoveMessage: (id: string) => void = (id) => {
@@ -126,6 +135,7 @@ const handleClickOnToast: (
 };
 
 const init: () => void = () => {
+  renderMessages();
   randomButtonElement.addEventListener("click", handleRandomButtonClick);
   formlElement.addEventListener("submit", handleFormSubmit);
   listElement.addEventListener("click", handleClickOnMessage);

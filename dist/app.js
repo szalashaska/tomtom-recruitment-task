@@ -1,12 +1,15 @@
 import { createMessageElement, createToastElement, } from "./utils/dom-elements.js";
 import randomMessages from "./helpers/randomMessages.js";
+import { saveToLocalStorage, readFromLocalStorage, } from "./utils/local-storage-handlers.js";
 const formlElement = document.getElementById("message-form");
 const listElement = document.getElementById("message-list");
 const inputElement = document.getElementById("user-input");
 const randomButtonElement = document.getElementById("random-button");
 const toastContainerElement = document.getElementById("toast-container");
+const TOAST_TIMEOUT = 5000;
+const USE_LOCAL_STORAGE = true;
 const appState = {
-    messagesList: [],
+    messagesList: readFromLocalStorage(),
     currentToastId: null,
     timeoutId: null,
 };
@@ -15,15 +18,14 @@ const generateRandomInput = () => {
     const index = Math.floor(Math.random() * length);
     return randomMessages[index];
 };
-const handleRandomButtonClick = () => {
-    inputElement.value = generateRandomInput();
-};
 const appendMessageToList = (message) => {
     const newMessage = {
         id: Date.now(),
         message,
     };
     appState.messagesList.unshift(newMessage);
+    if (USE_LOCAL_STORAGE)
+        saveToLocalStorage(appState.messagesList);
 };
 const clearFormInput = () => {
     inputElement.value = "";
@@ -37,6 +39,8 @@ const renderMessages = () => {
 };
 const removeMessageFromList = (id) => {
     appState.messagesList = appState.messagesList.filter((item) => item.id !== Number(id));
+    if (USE_LOCAL_STORAGE)
+        saveToLocalStorage(appState.messagesList);
 };
 const deleteToast = (element) => {
     element.remove();
@@ -46,7 +50,7 @@ const deleteToast = (element) => {
 const assignTimeout = (element) => {
     appState.timeoutId = setTimeout(() => {
         deleteToast(element);
-    }, 2000);
+    }, TOAST_TIMEOUT);
 };
 const renderToastComponent = () => {
     // Delete previous toast
@@ -63,6 +67,9 @@ const renderToastComponent = () => {
     const newToast = createToastElement(message);
     assignTimeout(newToast);
     toastContainerElement.appendChild(newToast);
+};
+const handleRandomButtonClick = () => {
+    inputElement.value = generateRandomInput();
 };
 const handleRemoveMessage = (id) => {
     removeMessageFromList(id);
@@ -89,6 +96,7 @@ const handleClickOnToast = (e) => {
         deleteToast(e.target.parentElement);
 };
 const init = () => {
+    renderMessages();
     randomButtonElement.addEventListener("click", handleRandomButtonClick);
     formlElement.addEventListener("submit", handleFormSubmit);
     listElement.addEventListener("click", handleClickOnMessage);

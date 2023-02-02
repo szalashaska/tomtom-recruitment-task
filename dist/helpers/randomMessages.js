@@ -14,5 +14,6 @@ const randomMessages = [
     "Cancel product",
     "Continue to collection",
     "Dismiss",
+    "Success",
 ];
 export default randomMessages;
